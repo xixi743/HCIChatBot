@@ -181,6 +181,8 @@ class CsStruggleBot(ChatBot):
         'indentified_problem',
         'failing',
         'specific_class',
+        'offer_solution',
+        'spring2018'
     ]
 
     TAGS = {
@@ -202,7 +204,7 @@ class CsStruggleBot(ChatBot):
         'celia': 'celia',
         'hsing-hau': 'hsing-hau',
 
-        # classes
+        # classes - FALL 2018
         'intro': 'intro',
         'fundamentals': 'intro',
         'comp 131': 'intro',
@@ -241,6 +243,23 @@ class CsStruggleBot(ChatBot):
         'comp 490': 'senior seminar',
         '490': 'senior seminar',
 
+        # classes - SPRING 2018
+        'mobile apps': 'mobile apps',
+        'mobile': 'mobile apps',
+        'apps': 'mobile apps',
+
+        'information theory': 'information theory',
+        'info thoery': 'information theory',
+
+        'practicum in computer science': 'practicum',
+        'practicum': 'practicum',
+        'computer science practicum': 'practicum',
+        'cs practicum': 'practicum',
+
+        'computer science junior seminar': 'junior seminar',
+        'junior seminar': 'junior seminar',
+        'cs junior seminar': 'junior seminar',
+
         # generic
         'thanks': 'thanks',
         'okay': 'success',
@@ -249,7 +268,23 @@ class CsStruggleBot(ChatBot):
         'yep': 'yes',
         'no': 'no',
         'nope': 'no',
+
+        #emotions
+        #FIXME haven't done anything with this yet
+        'hate': 'negative',
+        'dislike': 'negative',
     }
+
+    COURSES = [
+        'intro',
+        'mathematica',
+        'data structures',
+        'computer organization',
+        'algorithms analysis',
+        'hci',
+        'c and c',
+        'senior seminar',
+    ]
 
     PROFESSORS = [
         'celia',
@@ -259,6 +294,7 @@ class CsStruggleBot(ChatBot):
         'kathryn',
     ]
 
+
     def __init__(self):
         """Initialize the OxyCSBot.
 
@@ -267,7 +303,7 @@ class CsStruggleBot(ChatBot):
         """
         super().__init__(default_state='waiting')
         self.professor = None
-        self.class = None               # to store a specific class name
+        self.course = None               # to store a specific course name
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
@@ -286,6 +322,22 @@ class CsStruggleBot(ChatBot):
             'kathryn': 'MWF 4-5pm',
         }
         return office_hours[professor]
+
+    def get_course_professor(self, course):
+            # FIXME
+        """ Finds the professor of a course.
+
+        Arguments:
+            course (str): The course of interestself.
+
+        Returns:
+            str: The professor of that classself.
+            If more than one professor for that class, asks which section the student is in
+        """
+
+        course_professor = {
+            'intro: Hsing-Hua Chen and Kathryn Leonard both teach Fundamentals of Computer Science. Which is your profesor?',
+        }
 
     def get_office(self, professor):
         """Find the office of a professor.
@@ -315,6 +367,9 @@ class CsStruggleBot(ChatBot):
         if ('intro' in tags) or ('mathematica' in tags) or ('data structures' in tags) or ('computer organization' in tags) or ('algorithms analysis' in tags) or ('hci' in tags):
             return self.go_to_state('specific_class')
 
+        if ('mobile apps' in tags) or ('information theory' in tags) or ('practicum' in tags) or ('junior seminar' in tags):
+            return self.go_to_state('spring2018')
+
         if 'office-hours' in tags:
             for professor in self.PROFESSORS:
                 if professor in tags:
@@ -325,6 +380,7 @@ class CsStruggleBot(ChatBot):
             return self.finish('thanks')
         else:
             return self.finish('confused')
+
 
     # "specific_faculty" state functions
 
@@ -348,6 +404,9 @@ class CsStruggleBot(ChatBot):
     def on_enter_specific_class(self):
         return 'You should get in touch with your professor. Do you know when their office hours are?'
 
+    def on_enter_spring2018(self):
+        return ("I'm sorry, I can only help you with courses offered this semester.\n" +
+                "Is there anything else I can help you with?")
 
     # "unknown_faculty" state functions
 
@@ -379,7 +438,7 @@ class CsStruggleBot(ChatBot):
     # "finish" functions
 
     def finish_confused(self):
-        return "Sorry, I'm just a simple bot that understands a few things.\nYou can ask me for advice about struggling CS students!"
+        return "Sorry, I'm just a simple bot that understands a few things.\nYou can ask me for advice if you are struggling with computer science!"
 
     def finish_location(self):
         return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
