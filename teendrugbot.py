@@ -4,47 +4,43 @@
 import re
 from collections import Counter
 
-# FIXME rename CsStruggleBot
-
-# press F5 to run code in atom
-
 class ChatBot:
     """A tag-based chatbot framework
 
-    This class is not meant to be instantiated. Instead, it provides helper
-    functions that subclasses could use to create a tag-based chatbot. There
-    are two main components to a chatbot:
+        This class is not meant to be instantiated. Instead, it provides helper
+        functions that subclasses could use to create a tag-based chatbot. There
+        are two main components to a chatbot:
 
-    * A set of STATES to determine the context of a message.
-    * A set of TAGS that match on words in the message.
+        * A set of STATES to determine the context of a message.
+        * A set of TAGS that match on words in the message.
 
-    Subclasses must implement two methods for every state (except the
-    default): the `on_enter_*` method and the `respond_from_*` method. For
-    example, if there is a state called "confirm_delete", there should be two
-    methods `on_enter_confirm_delete` and `respond_from_confirm_delete`.
+        Subclasses must implement two methods for every state (except the
+        default): the `on_enter_*` method and the `respond_from_*` method. For
+        example, if there is a state called "confirm_delete", there should be two
+        methods `on_enter_confirm_delete` and `respond_from_confirm_delete`.
 
-    * `on_enter_*()` is what the chatbot should say when it enters a state.
+        * on_enter_*()` is what the chatbot should say when it enters a state.
         This method takes no arguments, and returns a string that is the
         chatbot's response. For example, a bot might enter the "confirm_delete"
         state after a message to delete a reservation, and the
         `on_enter_confirm_delete` might return "Are you sure you want to
         delete?".
 
-    * `respond_from_*()` determines which state the chatbot should enter next.
+        * `respond_from_*()` determines which state the chatbot should enter next.
         It takes two arguments: a string `message`, and a dictionary `tags`
         which counts the number of times each tag appears in the message. This
         function should always return with calls to either `go_to_state` or
         `finish`.
 
-    The `go_to_state` method automatically calls the related `on_enter_*`
-    method before setting the state of the chatbot. The `finish` function calls
-    a `finish_*` function before setting the state of the chatbot to the
-    default state.
+        The `go_to_state` method automatically calls the related `on_enter_*`
+        method before setting the state of the chatbot. The `finish` function calls
+        a `finish_*` function before setting the state of the chatbot to the
+        default state.
 
-    The TAGS class variable is a dictionary whose keys are words/phrases and
-    whose values are (list of) tags for that word/phrase. If the words/phrases
-    match a message, these tags are provided to the `respond_from_*` methods.
-    """
+        The TAGS class variable is a dictionary whose keys are words/phrases and
+        whose values are (list of) tags for that word/phrase. If the words/phrases
+        match a message, these tags are provided to the `respond_from_*` methods.
+        """
 
     STATES = []
     TAGS = {}
@@ -118,7 +114,7 @@ class ChatBot:
     def chat(self):
         """Start a chat with the chatbot."""
         try:
-            message = input(" Welcome. I hear your student is struggling in computer science. I'm here to offer parents like you advice. \n What can I help you with? \n> ")
+            message = input("So, you think your teen is doing drugs? What symptoms are they exhibiting? Any changes in behvaior? \n")
             while message.lower() not in ('exit', 'quit'):
                 print()
                 print(f'{self.__class__.__name__}: {self.respond(message)}')
@@ -172,107 +168,124 @@ class ChatBot:
         return counter
 
 
-class CsStruggleBot(ChatBot):
+class teendrugbot(ChatBot):
     """A simple chatbot that directs students to office hours of CS professors."""
 
     STATES = [
         'waiting',
-        'unknown_problem',
-        'indentified_problem',
-        'failing',
-        'specific_class',
-        'offer_solution',
-        'spring2018'
+        'unknown_drug',
+        'common_symptom',
+        'identified_drug',
+        'solution'
     ]
 
     TAGS = {
-        # intent
-        'fail': 'failing',
-        'failing': 'failing',
-        'help': 'problem',
+        # left a few example tags so I don't forget how to do them.
+        # a problem we will likely encounter is that many of the drugs share symptoms
+        # to avoid having a hard time identifying soley based of tags, we can make a category
+        # of common symptoms and then ask leading questions based of that to further identify
+        # the drug to then give advice
 
-        'office hours': 'office-hours',
-        'help': 'office-hours',
+        # refer to "Drugs Ledger" Google Doc for all of the drugs we are adding to our dictionary
 
-        # professors
-        'kathryn': 'kathryn',
-        'leonard': 'kathryn',
-        'justin': 'justin',
-        'li': 'justin',
-        'jeff': 'jeff',
-        'miller': 'jeff',
-        'celia': 'celia',
-        'hsing-hau': 'hsing-hau',
+        # weed
+        'red eyes': 'weed',
+        'bloodshot eyes': 'weed',
+        'slow reaction time': 'weed',
+        'slow reaction': 'weed',
+        'bad problem solving': 'weed',
+        'poor problem solving': 'weed',
+        'difficulty problem solving':'weed',
+        'lose track of thoughts': 'weed',
+        'bad memory': 'weed',
+        'poor memory': 'weed',
+        'short term memory':'weed',
+        'extreme hunger':'weed',
+        'unusual hunger': 'weed',
+        'increasing eating':'weed',
+        'eating more':'weed',
+        'munchies':'weed',
+        'silly':'weed',
+        'giggly':'weed',
+        'acting slow':'weed',
+        'lethargic':'weed',
+        'dazed':'weed',
+        'confused':'weed',
+        '420':'weed',
+        'rolling paper':'weed',
+        'bong':'weed',
+        'decorative piece':'weed',
+        'plants':'weed',
+        'dried plant':'weed',
+        'dried plants':'weed',
+        'grinder':'weed'
+        'oregano':'weed',
+        'marijuana leaves':'weed',
+        'devil':'weed',
+        'devils lettuce':'weed',
+        'grass':'weed',
+        'cannabis':'weed',
+        'blaze':'weed',
+        'ganga':'weed',
+        'joint':'weed',
+        'blunt':'weed',
+        'hemp':'weed',
 
-        # classes - FALL 2018
-        'intro': 'intro',
-        'fundamentals': 'intro',
-        'comp 131': 'intro',
-        '131': 'intro',
+        # adderall
+        'headache':'addy',
+        'hoarseness':'addy',
+        'shaking':'addy',
+        'shakiness':'addy',
+        'tremors':'addy',
+        'seizures':'addy',
 
-        'mathematica': 'mathematica',
-        'comp 165': 'mathematica',
-        '165': 'mathematica',
+        # common symptoms
+        # I was thinking for the common symptoms that we would just say,
+        # sorry, that is a common symptom,
+        # and then ask a bunch of questions of symptoms to narrow it down,
+        # basically 'are their eyes red?'
+        # if not, next question, if yes, weed
+        'cough': 'common', #shared between weed and tobacco
+        'fast heartbeat':'common', #shared between adderall and weed
+        'rapid heartbeat':'common',
+        'dry mouth':'common', #shared in four categories
+        'poor coordination': 'common', #shared between alcohol and weed
+        'loss of motivation': 'common', #shared between weed and narcotics
+        'no motivation': 'common',
+        'lack of motivation': 'common',
+        'no enthusiasm': 'common', #shared between weed and narcotics
+        'loss of enthusiasm':'common',
+        'lack of enthusiasm':'common',
+        'paranoia':'common', #shared between weed and hallucinogens
+        'paranoid':'common',
+        'small baggies':'common', #cocaine, weed, narcotics, and adderall
+        'pipe':'common', #narcostics, tabacco, weed
+        'pipes':'common',
+        'baggies':'common', #shared between weed, adderall, cocaine, and narcotics
+        'small baggies':'common',
+        'insence':'common', #used to mask smoking
+        'air freshener':'common',
+        'cologne':'common',
+        'perfume':'common',
+        'mouthwash':'common',
+        'mints':'common',
+        'gum':'common',
+        'towel':'common', #towel under door to block smoking
+        'nausea':'common', #shared between adderall and hallucinogens
+        'bad hygeiene':'common',
+        'poor hygeine':'common',
+        'bad personal grooming':'common',
+        'poor personal grooming':'common',
+        'stinky':'common',
+        'smelly':'common',
+        'slurred speech':'common', #shared between alcohol and addy
+        'slurred':'common',
+        'incoherent speech':'common',
 
-        'data structures': 'data structures',
-        'comp 229': 'data structures',
-        '229': 'structures',
 
-        'computer organization': 'computer organization',
-        'comp 239': 'computer',
-        '239': 'computer organization',
 
-        'algorithms analysis': 'algorithms analysis',
-        'algorithms': 'algorithms analysis',
-        'analysis': 'algorithms analysis',
-        'comp 317': 'algorithms analysis',
-        '317': 'algorithms analysis',
 
-        'human computer interaction': 'hci',
-        'hci': 'hci',
-        'comp 340': 'hci',
-        '340': 'hci',
 
-        'computability and complexity': 'c and c',
-        'comp 352': 'c and c',
-        '352': 'c and c',
-
-        'computer science senior seminar': 'senior seminar',
-        'seminar': 'senior seminar',
-        'senior': 'senior seminar',
-        'comp 490': 'senior seminar',
-        '490': 'senior seminar',
-
-        # classes - SPRING 2018
-        'mobile apps': 'mobile apps',
-        'mobile': 'mobile apps',
-        'apps': 'mobile apps',
-
-        'information theory': 'information theory',
-        'info thoery': 'information theory',
-
-        'practicum in computer science': 'practicum',
-        'practicum': 'practicum',
-        'computer science practicum': 'practicum',
-        'cs practicum': 'practicum',
-
-        'computer science junior seminar': 'junior seminar',
-        'junior seminar': 'junior seminar',
-        'cs junior seminar': 'junior seminar',
-
-        # generic
-        'thanks': 'thanks',
-        'okay': 'success',
-        'bye': 'success',
-        'yes': 'yes',
-        'yep': 'yes',
-        'no': 'no',
-        'nope': 'no',
-
-        #emotions
-        #FIXME haven't done anything with this yet
-        'hate': 'negative',
-        'dislike': 'negative',
     }
 
     COURSES = [
@@ -454,4 +467,4 @@ class CsStruggleBot(ChatBot):
 
 
 if __name__ == '__main__':
-    CsStruggleBot().chat()
+    teendrugbot().chat()
