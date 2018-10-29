@@ -460,7 +460,7 @@ class teendrugbot(ChatBot):
             return 'Sounds like your kid is using marijuana. Is it legal in your state?'
         elif self.drug == 'alcohol':
             return "Seems like your kid is using alcohol. Alcohol is the most popular drug amongst teens. Your child's use " \
-                   "of it may be inevitable. \nBecause of this, approach your child with nonjudgmental information on how to" \
+                   "of it may be inevitable. \nBecause of this, approach your child with nonjudgmental information on how to " \
                    "drink safely, and let them know you're always around to help. \n\nAny other problems with your kid(s) and drugs?"
         elif self.drug == 'cocaine':
             return "Seems like your kid is using cocaine. \nRIP :(\nCocaine is a highly addictive and dangerous drug. I'd recommend " \
