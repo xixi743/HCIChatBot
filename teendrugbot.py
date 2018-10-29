@@ -235,6 +235,7 @@ class teendrugbot(ChatBot):
         'joint':'weed',
         'blunt':'weed',
         'hemp':'weed',
+        'weed':'weed',
 
         # adderall
         'headache':'addy',
