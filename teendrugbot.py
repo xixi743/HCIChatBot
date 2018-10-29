@@ -175,6 +175,12 @@ class teendrugbot(ChatBot):
         'waiting',
         'unknown_drug',
         'common_symptom',
+        'common_symptom_2',
+        'common_symptom_3',
+        'common_symptom_4',
+        'common_symptom_5',
+        'common_symptom_6',
+        'common_symptom_7',
         'identified_drug'
     ]
 
@@ -504,33 +510,69 @@ class teendrugbot(ChatBot):
         if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
             self.drug = "weed"
             return self.go_to_state('identified_drug')
-        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print("Is your teen being overly talkative and unusually excitable?")
-            self.drug = "addy"
-            return self.go_to_state('identified_drug')
-        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print("Is your teen getting into fights and inable to do complex tasks?")
+        else:
+            return self.go_to_state('common_symptom_2')
+
+    def on_enter_common_symptom_2(self):
+        return "Is your teen being overly talkative and unusually excitable?"
+
+    def respond_from_common_symptom_2(self, message, tags):
+            if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+                self.drug = "addy"
+                return self.go_to_state('identified_drug')
+            else:
+                return self.go_to_state('common_symptom_3')
+
+    def on_enter_common_symptom_3(self):
+        return "Is your teen getting into fights and unable to do complex tasks?"
+
+    def respond_from_common_symptom_3(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
             self.drug = "alcohol"
             return self.go_to_state('identified_drug')
-        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print("Have you noticed your teen coughing/wheezing a lot or if they have stained/yellow fingers? ")
+        else:
+            return self.go_to_state('common_symptom_4')
+
+    def on_enter_common_symptom_4(self):
+        return "Have you noticed your teen coughing/wheezing a lot or if they have stained/yellow fingers?"
+
+    def respond_from_common_symptom_4(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
             self.drug = "tobacco"
             return self.go_to_state('identified_drug')
-        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print("Has your teen been getting frequent nose bleeds or often have a runny nose?")
+        else:
+            return self.go_to_state('common_symptom_5')
+
+    def on_enter_common_symptom_5(self):
+        return "Has your teen been getting frequent nose bleeds or often have a runny nose?"
+
+    def respond_from_common_symptom_5(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
             self.drug = "cocaine"
             return self.go_to_state('identified_drug')
-        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print("Has your teen been hallucinating and seeing things that aren't there?")
+        else:
+            return self.go_to_state('common_symptom_6')
+
+    def on_enter_common_symptom_6(self):
+        return "Has your teen been hallucinating and seeing things that aren't there?"
+
+    def respond_from_common_symptom_6(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
             self.drug = "lsd"
             return self.go_to_state('identified_drug')
-        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print("Have you noticed any injection marks on your teen?")
+        else:
+            return self.go_to_state('common_symptom_7')
+
+    def on_enter_common_symptom_7(self):
+        return "Have you noticed any injection marks on your teen?"
+
+    def respond_from_common_symptom_7(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
             self.drug = "opioid"
             return self.go_to_state('identified_drug')
         else:
             print("I'm sorry, I couldn't determine what drug your teen might be using.")
-            return self.go_to_state('unknown_drug')
+            return self.finish_fail()
 
     # "finish" functions
 
