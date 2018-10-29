@@ -114,7 +114,7 @@ class ChatBot:
     def chat(self):
         """Start a chat with the chatbot."""
         try:
-            message = input("So, you think your teen is doing drugs? What symptoms are they exhibiting? Any changes in behvaior? \n")
+            message = input("So, you think your teen is doing drugs? What symptoms are they exhibiting? Any changes in behavior? \n")
             while message.lower() not in ('exit', 'quit'):
                 print()
                 print(f'{self.__class__.__name__}: {self.respond(message)}')
@@ -169,14 +169,13 @@ class ChatBot:
 
 
 class teendrugbot(ChatBot):
-    """A simple chatbot that directs students to office hours of CS professors."""
+    """A simple chatbot that directs parents on how to identify what drugs their unruly teens are using."""
 
     STATES = [
         'waiting',
         'unknown_drug',
         'common_symptom',
-        'identified_drug',
-        #solution state?
+        'identified_drug'
     ]
 
     TAGS = {
@@ -239,10 +238,10 @@ class teendrugbot(ChatBot):
         'tremors':'addy',
         'seizures':'addy',
         'adderall':'addy',
-        'talkative':'addy',
-        'excitable':'addy',
-        'aggressive':'addy',
-        'aggression':'addy',
+        'talkative': 'addy',
+        'excitable': 'addy',
+        'aggressive': 'addy',
+        'aggression': 'addy',
 
         # alcohol
         'appetite': 'alcohol',
@@ -401,26 +400,13 @@ class teendrugbot(ChatBot):
         'pupils': 'common',
         'behavior': 'common',
         'withdrawn': 'common',
+
+        # 'yes' and 'no' tags
+        'yes':'yes',
+        'yeah':'yes',
+        'no':'no',
+        'nope':'no'
     }
-
-    COURSES = [
-        'intro',
-        'mathematica',
-        'data structures',
-        'computer organization',
-        'algorithms analysis',
-        'hci',
-        'c and c',
-        'senior seminar',
-    ]
-
-    PROFESSORS = [
-        'celia',
-        'hsing-hau',
-        'jeff',
-        'justin',
-        'kathryn',
-    ]
 
 
     def __init__(self):
@@ -430,66 +416,25 @@ class teendrugbot(ChatBot):
         professor has been identified.
         """
         super().__init__(default_state='waiting')
-        self.professor = None
-        self.drug = "unknown"
-
-    def get_office_hours(self, professor):
-        """Find the office hours of a professor.
-
-        Arguments:
-            professor (str): The professor of interest.
-
-        Returns:
-            str: The office hours of that professor.
-        """
-        office_hours = {
-            'celia': 'F 12-1:45pm; F 2:45-4:00pm',
-            'hsing-hau': 'T 1-2:30pm; Th 10:30am-noon',
-            'jeff': 'unknown',
-            'justin': 'T 1-2pm; W noon-1pm; F 3-4pm',
-            'kathryn': 'MWF 4-5pm',
-        }
-        return office_hours[professor]
-
-    def get_course_professor(self, course):
-            # FIXME
-        """ Finds the professor of a course.
-
-        Arguments:
-            course (str): The course of interestself.
-
-        Returns:
-            str: The professor of that classself.
-            If more than one professor for that class, asks which section the student is in
-        """
-
-        course_professor = {
-            'intro: Hsing-Hua Chen and Kathryn Leonard both teach Fundamentals of Computer Science. Which is your profesor?',
-        }
-
-    def get_office(self, professor):
-        """Find the office of a professor.
-
-        Arguments:
-            professor (str): The professor of interest.
-
-        Returns:
-            str: The office of that professor.
-        """
-        office = {
-            'celia': 'Swan 216',
-            'hsing-hau': 'Swan 302',
-            'jeff': 'Fowler 321',
-            'justin': 'Swan B102',
-            'kathryn': 'Swan B101',
-        }
-        return office[professor]
+        self.drug = 'unknown'
 
     # "waiting" state functions
 
     def respond_from_waiting(self, message, tags):
-        self.professor = None
+        self.drug = 'unknown'
         if ('alcohol' in tags) or ('cocaine' in tags) or ('weed' in tags) or ('lsd' in tags) or ('tobacco' in tags) or ('addy' in tags):
+            if 'alcohol' in tags:
+                self.drug = 'alcohol'
+            if 'cocaine' in tags:
+                self.drug = 'cocaine'
+            if 'weed' in tags:
+                self.drug = 'weed'
+            if 'lsd' in tags:
+                self.drug = 'lsd'
+            if 'tobacco' in tags:
+                self.drug = 'tobacco'
+            if 'addy' in tags:
+                self.drug = 'addy'
             return self.go_to_state('identified_drug')
         elif 'common' in tags:
             return self.go_to_state('common_symptom')
@@ -498,66 +443,47 @@ class teendrugbot(ChatBot):
         else:
             return self.go_to_state('unknown_drug')
 
-        if 'office-hours' in tags:
-            for professor in self.PROFESSORS:
-                if professor in tags:
-                    self.professor = professor
-                    return self.go_to_state('specific_faculty')
-            return self.go_to_state('unknown_faculty')
-        elif 'thanks' in tags:
-            return self.finish('thanks')
-        else:
-            return self.finish('confused')
-
-
-    # "specific_faculty" state functions
-
-    def on_enter_specific_faculty(self):
-        response = '\n'.join([
-            f"{self.professor.capitalize()}'s office hours are {self.get_office_hours(self.professor)}",
-            'Do you know where their office is?',
-        ])
-        return response
-
-    def respond_from_specific_faculty(self, message, tags):
-        if 'yes' in tags:
-            return self.finish('success')
-        else:
-            return self.finish('location')
-
-    # "unknown_faculty" state functions
-
-    def on_enter_unknown_faculty(self):
-        return "Who's office hours are you looking for?"
-
-    def respond_from_unknown_faculty(self, message, tags):
-        for professor in self.PROFESSORS:
-            if professor in tags:
-                self.professor = professor
-                return self.go_to_state('specific_faculty')
-        return self.go_to_state('unrecognized_faculty')
-
-    # "unrecognized_faculty" state functions
-
-    def on_enter_unrecognized_faculty(self):
-        return ' '.join([
-            "I'm not sure I understand - are you looking for",
-            "Celia, Hsing-hau, Jeff, Justin, or Kathryn?",
-        ])
-
-    def respond_from_unrecognized_faculty(self, message, tags):
-        for professor in self.PROFESSORS:
-            if professor in tags:
-                self.professor = professor
-                return self.go_to_state('specific_faculty')
-        return self.finish('fail')
-
     # "identified_drug" state functions
 
     def on_enter_identified_drug(self):
-        return
+        if self.drug == 'weed':
+            return 'Sounds like your kid is using marijuana. Is it legal in your state?'
+        elif self.drug == 'alcohol':
+            return "Seems like your kid is using alcohol. Alcohol is the most popular drug amongst teens. Your child's use " \
+                   "of it may be inevitable. \nBecause of this, approach your child with nonjudgmental information on how to" \
+                   "drink safely, and let them know you're always around to help. \n\nAny other problems with your kid(s) and drugs?"
+        elif self.drug == 'cocaine':
+            return "Seems like your kid is using cocaine. \nRIP :(\nCocaine is a highly addictive and dangerous drug. I'd recommend " \
+                   "talking to your child (_CALMLY_) and ask how long/how often they've been using. \nIf it's frequent use, rehab" \
+                   " is the safest option for your kid. If you're not comfortable with that, drug addiction support groups in your area" \
+                   " are also effective. \n\nAny other problems with your kid(s) and drugs?"
+        elif self.drug == 'tobacco':
+            return "Sounds like your kid is using tobacco!! Interventions are proven to be effective in curbing adolescent use. " \
+                   "\n(_CALMLY_) Talk to your child about the harmful long term and short term effects of tobacco. \nAs with anything, " \
+                   "reassure your child that you are a resource for them and they can come to you for information, advice, or help." \
+                   "\n\nAny other problems with your kid(s) and drugs?"
+        elif self.drug == 'addy':
+            return "Sounds like your kid is using Adderall recreationally! Approach this issue sensitively. \nWith Adderall abuse, " \
+                   "it's important to think about reasons your child may have turned to this substance, and talk to your child about " \
+                   "their feelings, stressors, and mental health. \nOnce you know the main reason, help your child address and " \
+                   "move past it. If you don't find the reason, make sure you talk to your child about the repercussions of " \
+                   "using Adderall without a prescription. \nBe open, be understanding, be kind.\n\nAny other problems with your" \
+                   " kid(s) and drugs?"
+        elif self.drug == 'lsd':
+            return "*FIXME*"
+        return self.finish_fail()
 
     def respond_from_identified_drug(self, message, tags):
+        if self.drug == 'weed':
+            if 'yes' in tags:
+                return 'Everyone smokes it now. Warn your kid of the repercussions and move on.'
+            else:
+                return "As far as drugs go, that ain't bad! Confiscate it for yourself."
+        else:
+            if 'yes' in tags:
+                return "I'm happy to help! Please leave this instance of the teendrugbot and come back with your next problem!"
+            else:
+                return self.finish_success()
         return
 
     # "unknown_drug" state functions
@@ -571,20 +497,19 @@ class teendrugbot(ChatBot):
     # "common_symptom" state functions
 
     def on_enter_common_symptom(self):
-        print ("Sorry, I'll need a bit more information to determine what kind of drug your teen is experimenting with. \n")
-        print ("Does your teen have bloodshoot eyes often and do they seem to be losing motivation?")
-        return
+        return "Sorry, I'll need a bit more information to determine what kind of drug your teen is experimenting with. \n" \
+               "Does your teen have bloodshoot eyes often and do they seem to be losing motivation?"
 
     def respond_from_common_symptom(self, message, tags):
         if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
             self.drug = "weed"
             return self.go_to_state('identified_drug')
         elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print ("Is your teen being overly talkative and unusually excitable?")
+            print("Is your teen being overly talkative and unusually excitable?")
             self.drug = "addy"
             return self.go_to_state('identified_drug')
         elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print ("Is your teen getting into fights and inable to do complex tasks?")
+            print("Is your teen getting into fights and inable to do complex tasks?")
             self.drug = "alcohol"
             return self.go_to_state('identified_drug')
         elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
@@ -592,21 +517,20 @@ class teendrugbot(ChatBot):
             self.drug = "tobacco"
             return self.go_to_state('identified_drug')
         elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print ("Has your teen been getting frequent nose bleeds or often have a runny nose?")
+            print("Has your teen been getting frequent nose bleeds or often have a runny nose?")
             self.drug = "cocaine"
             return self.go_to_state('identified_drug')
         elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print ("Has your teen been hallucinating and seeing things that aren't there?")
+            print("Has your teen been hallucinating and seeing things that aren't there?")
             self.drug = "lsd"
             return self.go_to_state('identified_drug')
         elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-            print ("Have you noticed any injection marks on your teen?")
+            print("Have you noticed any injection marks on your teen?")
             self.drug = "opioid"
             return self.go_to_state('identified_drug')
         else:
-            print ("I'm sorry, I couldn't determine what drug your teen might be using.")
+            print("I'm sorry, I couldn't determine what drug your teen might be using.")
             return self.go_to_state('unknown_drug')
-        return
 
     # "finish" functions
 
@@ -620,7 +544,7 @@ class teendrugbot(ChatBot):
         return 'Great, let me know if you need anything else!'
 
     def finish_fail(self):
-        return "I've tried my best but I still don't understand. Maybe try asking other students?"
+        return "I've tried my best but I still don't understand. Maybe try asking a human health professional?"
 
     def finish_thanks(self):
         return "You're welcome!"
