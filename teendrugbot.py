@@ -218,7 +218,7 @@ class teendrugbot(ChatBot):
         'plants':'weed',
         'dried plant':'weed',
         'dried plants':'weed',
-        'grinder':'weed'
+        'grinder':'weed',
         'oregano':'weed',
         'marijuana leaves':'weed',
         'devil':'weed',
@@ -238,6 +238,130 @@ class teendrugbot(ChatBot):
         'shakiness':'addy',
         'tremors':'addy',
         'seizures':'addy',
+
+        # alcohol
+        'bloodshot eyes':'alcohol',
+        'appetite': 'alcohol',
+        'sleep': 'alcohol',
+        'shaking': 'alcohol',
+        'grooming': 'alcohol',
+        'hygeine': 'alcohol',
+        'slurred speech': 'alcohol',
+        'bad coordination': 'alcohol',
+        'bruises': 'alcohol',
+        'smell of alcohol': 'alcohol',
+        'gum': 'alcohol',
+        'breath mints': 'alcohol',
+        'poor coordination': 'alcohol',
+        'missing school': 'alcohol',
+        'grades': 'alcohol',
+        'trouble': 'alcohol',
+        'fights': 'alcohol',
+        'arguments': 'alcohol',
+        'accidents': 'alcohol',
+        'interest': 'alcohol',
+        'money': 'alcohol',
+        'isolated': 'alcohol',
+        'withdrawn': 'alcohol',
+        'mood': 'alcohol',
+        'irritability': 'alcohol',
+        'outburst': 'alcohol',
+        'alcohol': 'alcohol',
+
+        # tobacco
+        'breath': 'tobacco',
+        'teeth': 'tobacco',
+        'yellow': 'tobacco',
+        'cough': 'tobacco',
+        'fingers': 'tobacco',
+        'wheezing': 'tobacco',
+        'smell': 'tobacco',
+        'smoke': 'tobacco',
+        'windows': 'tobacco',
+        'burn': 'tobacco',
+        'burns': 'tobacco',
+        'lighter': 'tobacco',
+        'matches': 'tobacco',
+        'temper': 'tobacco',
+        'tobacco': 'tobacco',
+
+        # cocaine
+        'hyper': 'cocaine',
+        'pupils': 'cocaine',
+        'nose': 'cocaine',
+        'weight': 'cocaine',
+        'mood': 'cocaine',
+        'behavior': 'cocaine',
+        'confidence': 'cocaine',
+        'talkative': 'cocaine',
+        'sleep': 'cocaine',
+        'sleeping': 'cocaine',
+        'eating': 'cocaine',
+        'eat': 'cocaine',
+        'powder': 'cocaine',
+        'hygeiene': 'cocaine',
+        'money': 'cocaine',
+        'interest': 'cocaine',
+        'needle marks': 'cocaine',
+        'spoon': 'cocaine',
+        'razor': 'cocaine',
+        'baggies': 'cocaine',
+        'isolation': 'cocaine',
+
+        # LSD, etc.
+        'pupils': 'lsd',
+        'dry mouth': 'lsd',
+        'tingling fingers': 'lsd',
+        'weakness': 'lsd',
+        'distress': 'lsd',
+        'anxiety': 'lsd',
+        'anxious': 'lsd',
+        'depression': 'lsd',
+        'depressed': 'lsd',
+        'disoriented': 'lsd',
+        'paranoid': 'lsd',
+        'dizzy': 'lsd',
+        'nauseous': 'lsd',
+        'heartrate': 'lsd',
+        'heart rate': 'lsd',
+        'convulsions': 'lsd',
+        'sweating': 'lsd',
+        'chills': 'lsd',
+        'vision': 'lsd',
+
+        # opioides
+        'breath': 'opioid',
+        'dry mouth': 'opioid',
+        'pupils': 'opioid',
+        'behavior': 'opioid',
+        'disoriented': 'opioid',
+        'swings': 'opioid',
+        'droopy': 'opioid',
+        'needles': 'opioid',
+        'syringe': 'opioid',
+        'spoon': 'opioid',
+        'burn': 'opioid',
+        'shoelaces': 'opioid',
+        'straws': 'opioid',
+        'baggies': 'opioid',
+        'plastic bags': 'opioid',
+        'pipe': 'opioid',
+        'weight': 'opioid',
+        'nose': 'opioid',
+        'marks': 'opioid',
+        'infection': 'opioid',
+        'cuts': 'opioid',
+        'scabs': 'opioid',
+        'picking': 'opioid',
+        'sleep': 'opioid',
+        'hygiene': 'opioid',
+        'motivation': 'opioid',
+        'withdrawn':'opioid',
+        'money': 'opioid',
+        'hostile': 'opioid',
+        'self esteem': 'opioid',
+        'pants': 'opioid',
+        'sleeves': 'opioid',
 
         # common symptoms
         # I was thinking for the common symptoms that we would just say,
@@ -447,6 +571,22 @@ class teendrugbot(ChatBot):
                 self.professor = professor
                 return self.go_to_state('specific_faculty')
         return self.finish('fail')
+
+    # "unknown_drug" state functions
+
+    def on_enter_unknown_drug(self):
+        return
+
+    def respond_from_unknown_drug(self, message, tags):
+        return
+
+    # "common_symptom" state functions
+
+    def on_enter_common_symptom(self):
+        return
+
+    def respond_from_common_symptom(self, message, tags):
+        return
 
     # "finish" functions
 
