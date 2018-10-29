@@ -176,7 +176,7 @@ class teendrugbot(ChatBot):
         'unknown_drug',
         'common_symptom',
         'identified_drug',
-        'solution'
+        #solution state?
     ]
 
     TAGS = {
@@ -239,9 +239,12 @@ class teendrugbot(ChatBot):
         'tremors':'addy',
         'seizures':'addy',
         'adderall':'addy',
+        'talkative':'addy',
+        'excitable':'addy',
+        'aggressive':'addy',
+        'aggression':'addy',
 
         # alcohol
-         'bloodshot eyes':'alcohol',
         'appetite': 'alcohol',
         'shaking': 'alcohol',
         'grooming': 'alcohol',
@@ -249,6 +252,7 @@ class teendrugbot(ChatBot):
         'slurred speech': 'alcohol',
         'bruises': 'alcohol',
         'smell of alcohol': 'alcohol',
+        'smells of alcohol':'alcohol',
         'alcohol':'alcohol',
         'gum': 'alcohol',
         'arguments': 'alcohol',
@@ -261,7 +265,7 @@ class teendrugbot(ChatBot):
         'bottle':'alcohol',
 
         # tobacco
-         'breath': 'tobacco',
+        'breath': 'tobacco',
         'bad breath':'tobacco',
         'teeth': 'tobacco',
         'yellow': 'tobacco',
@@ -277,7 +281,6 @@ class teendrugbot(ChatBot):
         'matches': 'tobacco',
         'temper': 'tobacco',
         'tobacco': 'tobacco',
-
 
         # cocaine
          'hyper': 'cocaine',
@@ -428,6 +431,7 @@ class teendrugbot(ChatBot):
         """
         super().__init__(default_state='waiting')
         self.professor = None
+        self.drug = "unknown"
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
@@ -567,9 +571,41 @@ class teendrugbot(ChatBot):
     # "common_symptom" state functions
 
     def on_enter_common_symptom(self):
+        print ("Sorry, I'll need a bit more information to determine what kind of drug your teen is experimenting with. \n")
+        print ("Does your teen have bloodshoot eyes often and do they seem to be losing motivation?")
         return
 
     def respond_from_common_symptom(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            self.drug = "weed"
+            return self.go_to_state('identified_drug')
+        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            print ("Is your teen being overly talkative and unusually excitable?")
+            self.drug = "addy"
+            return self.go_to_state('identified_drug')
+        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            print ("Is your teen getting into fights and inable to do complex tasks?")
+            self.drug = "alcohol"
+            return self.go_to_state('identified_drug')
+        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            print("Have you noticed your teen coughing/wheezing a lot or if they have stained/yellow fingers? ")
+            self.drug = "tobacco"
+            return self.go_to_state('identified_drug')
+        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            print ("Has your teen been getting frequent nose bleeds or often have a runny nose?")
+            self.drug = "cocaine"
+            return self.go_to_state('identified_drug')
+        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            print ("Has your teen been hallucinating and seeing things that aren't there?")
+            self.drug = "lsd"
+            return self.go_to_state('identified_drug')
+        elif ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            print ("Have you noticed any injection marks on your teen?")
+            self.drug = "opioid"
+            return self.go_to_state('identified_drug')
+        else:
+            print ("I'm sorry, I couldn't determine what drug your teen might be using.")
+            return self.go_to_state('unknown_drug')
         return
 
     # "finish" functions
