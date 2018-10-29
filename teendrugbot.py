@@ -363,7 +363,7 @@ class teendrugbot(ChatBot):
         'pipe':'common', #narcostics, tabacco, weed
         'pipes':'common',
         'baggies':'common', #shared between weed, adderall, cocaine, and narcotics
-        'small baggies':'common',
+        'bag':'common',
         'insence':'common', #used to mask smoking
         'air freshener':'common',
         'cologne':'common',
