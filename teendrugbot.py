@@ -218,7 +218,7 @@ class teendrugbot(ChatBot):
         'plants':'weed',
         'dried plant':'weed',
         'dried plants':'weed',
-        'grinder':'weed'
+        'grinder':'weed',
         'oregano':'weed',
         'marijuana leaves':'weed',
         'devil':'weed',
@@ -238,6 +238,102 @@ class teendrugbot(ChatBot):
         'shakiness':'addy',
         'tremors':'addy',
         'seizures':'addy',
+        'adderall':'addy',
+
+        # alcohol
+        'bloodshot eyes':'alcohol',
+        'appetite': 'alcohol',
+        'shaking': 'alcohol',
+        'grooming': 'alcohol',
+        'hygeine': 'alcohol',
+        'slurred speech': 'alcohol',
+        'bruises': 'alcohol',
+        'smell of alcohol': 'alcohol',
+        'alcohol':'alcohol',
+        'gum': 'alcohol',
+        'arguments': 'alcohol',
+        'accidents': 'alcohol',
+        'isolated': 'alcohol',
+        'irritability': 'alcohol',
+        'outburst': 'alcohol',
+        'alcohol': 'alcohol',
+        'bottles':'alcohol',
+        'bottle':'alcohol',
+
+        # tobacco
+        'breath': 'tobacco',
+        'bad breath':'tobacco',
+        'teeth': 'tobacco',
+        'yellow': 'tobacco',
+        'fingers': 'tobacco',
+        'wheezing': 'tobacco',
+        'smoke': 'tobacco',
+        'smokey':'tobacco',
+        'windows': 'tobacco',
+        'burn': 'tobacco',
+        'burns': 'tobacco',
+        'fire':'tobacco',
+        'lighter': 'tobacco',
+        'matches': 'tobacco',
+        'temper': 'tobacco',
+        'tobacco': 'tobacco',
+
+        # cocaine
+        'hyper': 'cocaine',
+        'pupils': 'cocaine',
+        'nose': 'cocaine',
+        'snort':'cocaine',
+        'behavior': 'cocaine',
+        'confidence': 'cocaine',
+        'talkative': 'cocaine',
+        'powder': 'cocaine',
+        'hygeiene': 'cocaine',
+        'needle marks': 'cocaine',
+        'spoon': 'cocaine',
+        'razor': 'cocaine',
+        'isolation': 'cocaine',
+
+        # LSD, etc.
+        'dry mouth': 'lsd',
+        'tingling fingers': 'lsd',
+        'weakness': 'lsd',
+        'distress': 'lsd',
+        'anxiety': 'lsd',
+        'anxious': 'lsd',
+        'depression': 'lsd',
+        'depressed': 'lsd',
+        'disoriented': 'lsd',
+        'paranoid': 'lsd',
+        'convulsions': 'lsd',
+        'sweating': 'lsd',
+        'chills': 'lsd',
+        'vision': 'lsd',
+        'hallucinate':'lsd',
+        'hallucinogen':'lsd',
+        'seeing things':'lsd',
+
+        # opioides
+        'disoriented': 'opioid',
+        'swings': 'opioid',
+        'droopy': 'opioid',
+        'needles': 'opioid',
+        'syringe': 'opioid',
+        'spoon': 'opioid',
+        'shoelaces': 'opioid',
+        'straws': 'opioid',
+        'pipe': 'opioid',
+        'nose': 'opioid',
+        'marks': 'opioid',
+        'infection': 'opioid',
+        'cuts': 'opioid',
+        'scabs': 'opioid',
+        'picking': 'opioid',
+        'hygiene': 'opioid',
+        'motivation': 'opioid',
+        'hostile': 'opioid',
+        'self esteem': 'opioid',
+        'pants': 'opioid',
+        'sleeves': 'opioid',
 
         # common symptoms
         # I was thinking for the common symptoms that we would just say,
@@ -250,6 +346,7 @@ class teendrugbot(ChatBot):
         'rapid heartbeat':'common',
         'dry mouth':'common', #shared in four categories
         'poor coordination': 'common', #shared between alcohol and weed
+        'bad coordination': 'common',
         'loss of motivation': 'common', #shared between weed and narcotics
         'no motivation': 'common',
         'lack of motivation': 'common',
@@ -262,7 +359,7 @@ class teendrugbot(ChatBot):
         'pipe':'common', #narcostics, tabacco, weed
         'pipes':'common',
         'baggies':'common', #shared between weed, adderall, cocaine, and narcotics
-        'small baggies':'common',
+        'bag':'common',
         'insence':'common', #used to mask smoking
         'air freshener':'common',
         'cologne':'common',
@@ -278,13 +375,28 @@ class teendrugbot(ChatBot):
         'poor personal grooming':'common',
         'stinky':'common',
         'smelly':'common',
+        'smell':'common',
         'slurred speech':'common', #shared between alcohol and addy
         'slurred':'common',
         'incoherent speech':'common',
-
-
-
-
+        'missing school': 'common',
+        'grades': 'common',
+        'trouble': 'common',
+        'fights': 'common',
+        'interest':'common',
+        'sleep':'common',
+        'money':'money',
+        'mood':'common,
+        'weight':'common',
+        'eat':'common,',
+        'eating':'common',
+        'dizzy':'common',
+        'nauseous':'common',
+        'heartrate': 'common',
+        'heart rate': 'common',
+        'pupils':'common',
+        'behavior':'common',
+        'withdrawn':'common',
 
     }
 
@@ -447,6 +559,22 @@ class teendrugbot(ChatBot):
                 self.professor = professor
                 return self.go_to_state('specific_faculty')
         return self.finish('fail')
+
+    # "unknown_drug" state functions
+
+    def on_enter_unknown_drug(self):
+        return
+
+    def respond_from_unknown_drug(self, message, tags):
+        return
+
+    # "common_symptom" state functions
+
+    def on_enter_common_symptom(self):
+        return
+
+    def respond_from_common_symptom(self, message, tags):
+        return
 
     # "finish" functions
 
