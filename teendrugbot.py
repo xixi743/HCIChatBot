@@ -114,7 +114,7 @@ class ChatBot:
     def chat(self):
         """Start a chat with the chatbot."""
         try:
-            message = input("So, you think your teen is doing drugs? What symptoms are they exhibiting? Any changes in behvaior? \n")
+            message = input("So, you think your teen is doing drugs? What symptoms are they exhibiting? Any changes in behavior? \n")
             while message.lower() not in ('exit', 'quit'):
                 print()
                 print(f'{self.__class__.__name__}: {self.respond(message)}')
@@ -169,14 +169,18 @@ class ChatBot:
 
 
 class teendrugbot(ChatBot):
-    """A simple chatbot that directs students to office hours of CS professors."""
+    """A simple chatbot that directs parents on how to identify what drugs their unruly teens are using."""
 
     STATES = [
         'waiting',
-        'unknown_drug',
         'common_symptom',
-        'identified_drug',
-        'solution'
+        'common_symptom_2',
+        'common_symptom_3',
+        'common_symptom_4',
+        'common_symptom_5',
+        'common_symptom_6',
+        'common_symptom_7',
+        'identified_drug'
     ]
 
     TAGS = {
@@ -239,9 +243,12 @@ class teendrugbot(ChatBot):
         'tremors':'addy',
         'seizures':'addy',
         'adderall':'addy',
+        'talkative': 'addy',
+        'excitable': 'addy',
+        'aggressive': 'addy',
+        'aggression': 'addy',
 
         # alcohol
-        'bloodshot eyes':'alcohol',
         'appetite': 'alcohol',
         'shaking': 'alcohol',
         'grooming': 'alcohol',
@@ -249,6 +256,7 @@ class teendrugbot(ChatBot):
         'slurred speech': 'alcohol',
         'bruises': 'alcohol',
         'smell of alcohol': 'alcohol',
+        'smells of alcohol':'alcohol',
         'alcohol':'alcohol',
         'gum': 'alcohol',
         'arguments': 'alcohol',
@@ -279,7 +287,7 @@ class teendrugbot(ChatBot):
         'tobacco': 'tobacco',
 
         # cocaine
-        'hyper': 'cocaine',
+         'hyper': 'cocaine',
         'pupils': 'cocaine',
         'nose': 'cocaine',
         'snort':'cocaine',
@@ -294,7 +302,7 @@ class teendrugbot(ChatBot):
         'isolation': 'cocaine',
 
         # LSD, etc.
-        'dry mouth': 'lsd',
+         'dry mouth': 'lsd',
         'tingling fingers': 'lsd',
         'weakness': 'lsd',
         'distress': 'lsd',
@@ -310,6 +318,7 @@ class teendrugbot(ChatBot):
         'vision': 'lsd',
         'hallucinate':'lsd',
         'hallucinogen':'lsd',
+        'hallucinating':'lsd',
         'seeing things':'lsd',
 
         # opioides
@@ -335,130 +344,6 @@ class teendrugbot(ChatBot):
         'pants': 'opioid',
         'sleeves': 'opioid',
 
-        # alcohol
-        'bloodshot eyes':'alcohol',
-        'appetite': 'alcohol',
-        'sleep': 'alcohol',
-        'shaking': 'alcohol',
-        'grooming': 'alcohol',
-        'hygeine': 'alcohol',
-        'slurred speech': 'alcohol',
-        'bad coordination': 'alcohol',
-        'bruises': 'alcohol',
-        'smell of alcohol': 'alcohol',
-        'gum': 'alcohol',
-        'breath mints': 'alcohol',
-        'poor coordination': 'alcohol',
-        'missing school': 'alcohol',
-        'grades': 'alcohol',
-        'trouble': 'alcohol',
-        'fights': 'alcohol',
-        'arguments': 'alcohol',
-        'accidents': 'alcohol',
-        'interest': 'alcohol',
-        'money': 'alcohol',
-        'isolated': 'alcohol',
-        'withdrawn': 'alcohol',
-        'mood': 'alcohol',
-        'irritability': 'alcohol',
-        'outburst': 'alcohol',
-        'alcohol': 'alcohol',
-
-        # tobacco
-        'breath': 'tobacco',
-        'teeth': 'tobacco',
-        'yellow': 'tobacco',
-        'cough': 'tobacco',
-        'fingers': 'tobacco',
-        'wheezing': 'tobacco',
-        'smell': 'tobacco',
-        'smoke': 'tobacco',
-        'windows': 'tobacco',
-        'burn': 'tobacco',
-        'burns': 'tobacco',
-        'lighter': 'tobacco',
-        'matches': 'tobacco',
-        'temper': 'tobacco',
-        'tobacco': 'tobacco',
-
-        # cocaine
-        'hyper': 'cocaine',
-        'pupils': 'cocaine',
-        'nose': 'cocaine',
-        'weight': 'cocaine',
-        'mood': 'cocaine',
-        'behavior': 'cocaine',
-        'confidence': 'cocaine',
-        'talkative': 'cocaine',
-        'sleep': 'cocaine',
-        'sleeping': 'cocaine',
-        'eating': 'cocaine',
-        'eat': 'cocaine',
-        'powder': 'cocaine',
-        'hygeiene': 'cocaine',
-        'money': 'cocaine',
-        'interest': 'cocaine',
-        'needle marks': 'cocaine',
-        'spoon': 'cocaine',
-        'razor': 'cocaine',
-        'baggies': 'cocaine',
-        'isolation': 'cocaine',
-
-        # LSD, etc.
-        'pupils': 'lsd',
-        'dry mouth': 'lsd',
-        'tingling fingers': 'lsd',
-        'weakness': 'lsd',
-        'distress': 'lsd',
-        'anxiety': 'lsd',
-        'anxious': 'lsd',
-        'depression': 'lsd',
-        'depressed': 'lsd',
-        'disoriented': 'lsd',
-        'paranoid': 'lsd',
-        'dizzy': 'lsd',
-        'nauseous': 'lsd',
-        'heartrate': 'lsd',
-        'heart rate': 'lsd',
-        'convulsions': 'lsd',
-        'sweating': 'lsd',
-        'chills': 'lsd',
-        'vision': 'lsd',
-
-        # opioides
-        'breath': 'opioid',
-        'dry mouth': 'opioid',
-        'pupils': 'opioid',
-        'behavior': 'opioid',
-        'disoriented': 'opioid',
-        'swings': 'opioid',
-        'droopy': 'opioid',
-        'needles': 'opioid',
-        'syringe': 'opioid',
-        'spoon': 'opioid',
-        'burn': 'opioid',
-        'shoelaces': 'opioid',
-        'straws': 'opioid',
-        'baggies': 'opioid',
-        'plastic bags': 'opioid',
-        'pipe': 'opioid',
-        'weight': 'opioid',
-        'nose': 'opioid',
-        'marks': 'opioid',
-        'infection': 'opioid',
-        'cuts': 'opioid',
-        'scabs': 'opioid',
-        'picking': 'opioid',
-        'sleep': 'opioid',
-        'hygiene': 'opioid',
-        'motivation': 'opioid',
-        'withdrawn':'opioid',
-        'money': 'opioid',
-        'hostile': 'opioid',
-        'self esteem': 'opioid',
-        'pants': 'opioid',
-        'sleeves': 'opioid',
-
         # common symptoms
         # I was thinking for the common symptoms that we would just say,
         # sorry, that is a common symptom,
@@ -470,7 +355,7 @@ class teendrugbot(ChatBot):
         'rapid heartbeat':'common',
         'dry mouth':'common', #shared in four categories
         'poor coordination': 'common', #shared between alcohol and weed
-        'bad coordination': 'common',
+        'bad coordination':'common',
         'loss of motivation': 'common', #shared between weed and narcotics
         'no motivation': 'common',
         'lack of motivation': 'common',
@@ -479,11 +364,11 @@ class teendrugbot(ChatBot):
         'lack of enthusiasm':'common',
         'paranoia':'common', #shared between weed and hallucinogens
         'paranoid':'common',
-        'small baggies':'common', #cocaine, weed, narcotics, and adderall
+        'bag':'common', #cocaine, weed, narcotics, and adderall
         'pipe':'common', #narcostics, tabacco, weed
         'pipes':'common',
         'baggies':'common', #shared between weed, adderall, cocaine, and narcotics
-        'bag':'common',
+        'small baggies':'common',
         'insence':'common', #used to mask smoking
         'air freshener':'common',
         'cologne':'common',
@@ -507,41 +392,31 @@ class teendrugbot(ChatBot):
         'grades': 'common',
         'trouble': 'common',
         'fights': 'common',
-        'interest':'common',
-        'sleep':'common',
-        'money':'money',
-        'mood':'common,
+        'interest': 'common',
+        'sleep': 'common',
+        'money': 'money',
+        'mood': 'common',
         'weight':'common',
-        'eat':'common,',
-        'eating':'common',
-        'dizzy':'common',
-        'nauseous':'common',
+        'eat': 'common,',
+        'eating': 'common',
+        'dizzy': 'common',
+        'nauseous': 'common',
         'heartrate': 'common',
         'heart rate': 'common',
-        'pupils':'common',
-        'behavior':'common',
-        'withdrawn':'common',
+        'pupils': 'common',
+        'behavior': 'common',
+        'withdrawn': 'common',
 
+        # 'yes' and 'no' tags
+        'yes':'yes',
+        'yeah':'yes',
+        'no':'no',
+        'nope':'no',
+
+        'thanks':'thanks',
+        'thanks!':'thanks',
+        'thank you':'thanks'
     }
-
-    COURSES = [
-        'intro',
-        'mathematica',
-        'data structures',
-        'computer organization',
-        'algorithms analysis',
-        'hci',
-        'c and c',
-        'senior seminar',
-    ]
-
-    PROFESSORS = [
-        'celia',
-        'hsing-hau',
-        'jeff',
-        'justin',
-        'kathryn',
-    ]
 
 
     def __init__(self):
@@ -551,168 +426,188 @@ class teendrugbot(ChatBot):
         professor has been identified.
         """
         super().__init__(default_state='waiting')
-        self.professor = None
-        self.course = None               # to store a specific course name
-
-    def get_office_hours(self, professor):
-        """Find the office hours of a professor.
-
-        Arguments:
-            professor (str): The professor of interest.
-
-        Returns:
-            str: The office hours of that professor.
-        """
-        office_hours = {
-            'celia': 'F 12-1:45pm; F 2:45-4:00pm',
-            'hsing-hau': 'T 1-2:30pm; Th 10:30am-noon',
-            'jeff': 'unknown',
-            'justin': 'T 1-2pm; W noon-1pm; F 3-4pm',
-            'kathryn': 'MWF 4-5pm',
-        }
-        return office_hours[professor]
-
-    def get_course_professor(self, course):
-            # FIXME
-        """ Finds the professor of a course.
-
-        Arguments:
-            course (str): The course of interestself.
-
-        Returns:
-            str: The professor of that classself.
-            If more than one professor for that class, asks which section the student is in
-        """
-
-        course_professor = {
-            'intro: Hsing-Hua Chen and Kathryn Leonard both teach Fundamentals of Computer Science. Which is your profesor?',
-        }
-
-    def get_office(self, professor):
-        """Find the office of a professor.
-
-        Arguments:
-            professor (str): The professor of interest.
-
-        Returns:
-            str: The office of that professor.
-        """
-        office = {
-            'celia': 'Swan 216',
-            'hsing-hau': 'Swan 302',
-            'jeff': 'Fowler 321',
-            'justin': 'Swan B102',
-            'kathryn': 'Swan B101',
-        }
-        return office[professor]
+        self.drug = 'unknown'
 
     # "waiting" state functions
 
     def respond_from_waiting(self, message, tags):
-        self.professor = None
-        if 'failing' in tags:
-            return self.go_to_state('failing')
-
-        if ('intro' in tags) or ('mathematica' in tags) or ('data structures' in tags) or ('computer organization' in tags) or ('algorithms analysis' in tags) or ('hci' in tags):
-            return self.go_to_state('specific_class')
-
-        if ('mobile apps' in tags) or ('information theory' in tags) or ('practicum' in tags) or ('junior seminar' in tags):
-            return self.go_to_state('spring2018')
-
-        if 'office-hours' in tags:
-            for professor in self.PROFESSORS:
-                if professor in tags:
-                    self.professor = professor
-                    return self.go_to_state('specific_faculty')
-            return self.go_to_state('unknown_faculty')
+        self.drug = 'unknown'
+        if ('alcohol' in tags) or ('cocaine' in tags) or ('weed' in tags) or ('lsd' in tags) or ('tobacco' in tags) or ('addy' in tags):
+            if 'alcohol' in tags:
+                self.drug = 'alcohol'
+            if 'cocaine' in tags:
+                self.drug = 'cocaine'
+            if 'weed' in tags:
+                self.drug = 'weed'
+            if 'lsd' in tags:
+                self.drug = 'lsd'
+            if 'tobacco' in tags:
+                self.drug = 'tobacco'
+            if 'addy' in tags:
+                self.drug = 'addy'
+            return self.go_to_state('identified_drug')
+        elif 'common' in tags:
+            return self.go_to_state('common_symptom')
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
-            return self.finish('confused')
+            return self.go_to_state('common_symptom')
 
+    # "identified_drug" state functions
 
-    # "specific_faculty" state functions
+    def on_enter_identified_drug(self):
+        if self.drug == 'weed':
+            return 'Sounds like your kid is using marijuana. Is it legal in your state?'
+        elif self.drug == 'alcohol':
+            return "Seems like your kid is using alcohol. Alcohol is the most popular drug amongst teens. Your child's use " \
+                   "of it may be inevitable. \nBecause of this, approach your child with nonjudgmental information on how to " \
+                   "drink safely, and let them know you're always around to help. \n\nAny other problems with your kid(s) and drugs?"
+        elif self.drug == 'cocaine':
+            return "Seems like your kid is using cocaine. \nRIP :(\nCocaine is a highly addictive and dangerous drug. I'd recommend " \
+                   "talking to your child (_CALMLY_) and ask how long/how often they've been using. \nIf it's frequent use, rehab" \
+                   " is the safest option for your kid. If you're not comfortable with that, drug addiction support groups in your area" \
+                   " are also effective. \n\nAny other problems with your kid(s) and drugs?"
+        elif self.drug == 'tobacco':
+            return "Sounds like your kid is using tobacco!! Interventions are proven to be effective in curbing adolescent use. " \
+                   "\n(_CALMLY_) Talk to your child about the harmful long term and short term effects of tobacco. \nAs with anything, " \
+                   "reassure your child that you are a resource for them and they can come to you for information, advice, or help." \
+                   "\n\nAny other problems with your kid(s) and drugs?"
+        elif self.drug == 'addy':
+            return "Sounds like your kid is using Adderall recreationally! Approach this issue sensitively. \nWith Adderall abuse, " \
+                   "it's important to think about reasons your child may have turned to this substance, and talk to your child about " \
+                   "their feelings, stressors, and mental health. \nOnce you know the main reason, help your child address and " \
+                   "move past it. If you don't find the reason, make sure you talk to your child about the repercussions of " \
+                   "using Adderall without a prescription. \nBe open, be understanding, be kind.\n\nAny other problems with your" \
+                   " kid(s) and drugs?"
+        elif self.drug == 'lsd':
+            return "Sounds like your kid is using hallucinogens. You’re in luck! Or as lucky as you can be with your child using drugs. The FDA has claimed that " \
+                   "\nLSD and most other hallucinogens do not make the chemical changes in the brain responsible" \
+                   " \nfor the development of cravings like other drugs do, meaning that there is no element of chemically" \
+                   " \ndependent drug seeking behavior. Although there is no chemical addiction, your kid could still have " \
+                   "\na general addiction to the effects of hallucinogens. If your kid is addicted, they’d be taking " \
+                   "\nhallucinogens with other substances to heighten the experience of hallucinogens, spending " \
+                   "\nsubstantial amounts of time or money on obtaining or using hallucinogens, and neglecting " \
+                   "\nresponsibilities or hobbies as a result of continued hallucinogen use. " \
+                   "\n\nIs your child doing any of those things?"
+        return self.finish_fail()
 
-    def on_enter_specific_faculty(self):
-        response = '\n'.join([
-            f"{self.professor.capitalize()}'s office hours are {self.get_office_hours(self.professor)}",
-            'Do you know where their office is?',
-        ])
-        return response
-
-    def respond_from_specific_faculty(self, message, tags):
-        if 'yes' in tags:
-            return self.finish('success')
+    def respond_from_identified_drug(self, message, tags):
+        if self.drug == 'weed':
+            if 'yes' in tags:
+                return 'Everyone smokes it now. Warn your kid of the repercussions and move on.\n\nFor more help and advice, leave this instance of the ' \
+                       'teendrugbot and come back!'
+            else:
+                return "As far as drugs go, that ain't bad! Confiscate it for yourself.\n\nFor more help and advice, leave this instance of the " \
+                       "teendrugbot and come back!"
+        elif self.drug == 'lsd':
+            if 'yes' in tags:
+                return "Gosh diddly darn. That’s pretty serious! Hallucinogens require larger amounts over time to " \
+                       "\nexperience the desired effects, which means it’s really easy to overdose with consistent use, " \
+                       "\nand bad trips that put your kid in danger are more frequent. Talking to your kid about how " \
+                       "\ndangerous hallucinogens can be is the best first step. Then from there, you can either use a " \
+                       "\nbrief intervention technique, or community reinforcement and family training (CRAFT), both of " \
+                       "\nwhich are backed by a bunch of research. Brief interventions are essentially short counseling " \
+                       "\nsessions—lasting anywhere from 5-30 minutes—that are administered by trained healthcare " \
+                       "\nproviders. CRAFT, on the other hand, is a way to increase compliance of your kid in substance " \
+                       "\nabuse treatment by properly engaging family and community members. People who comprise " \
+                       "\nyour kid’s support system are trained in ways that strengthen this system and maximize the " \
+                       "\nindividual’s chances of maintaining sobriety.\n\nFor more help and advice, leave this instance of the " \
+                       "teendrugbot and come back!"
+            else:
+                return "Alrighty then! Helping your kid is pretty straightforward. " \
+                       "\nIt’s really about talking to your kid in an open way where you’re really trying to hear " \
+                       "\nthem. Then, once you’ve addressed the issue yourself, providing group and individual therapy " \
+                       "\nare effective ways to address the reasons behind the substance use and helping your to develop" \
+                       " \nboth better coping skills and techniques to prevent relapse.\n\nFor more help and advice, leave this instance of the " \
+                       "teendrugbot and come back!"
         else:
-            return self.finish('location')
-
-    # "failing" state functions
-    def on_enter_failing(self):
-        return 'Which course are you currently failing?'
-
-    def on_enter_specific_class(self):
-        return 'You should get in touch with your professor. Do you know when their office hours are?'
-
-    def on_enter_spring2018(self):
-        return ("I'm sorry, I can only help you with courses offered this semester.\n" +
-                "Is there anything else I can help you with?")
-
-    # "unknown_faculty" state functions
-
-    def on_enter_unknown_faculty(self):
-        return "Who's office hours are you looking for?"
-
-    def respond_from_unknown_faculty(self, message, tags):
-        for professor in self.PROFESSORS:
-            if professor in tags:
-                self.professor = professor
-                return self.go_to_state('specific_faculty')
-        return self.go_to_state('unrecognized_faculty')
-
-    # "unrecognized_faculty" state functions
-
-    def on_enter_unrecognized_faculty(self):
-        return ' '.join([
-            "I'm not sure I understand - are you looking for",
-            "Celia, Hsing-hau, Jeff, Justin, or Kathryn?",
-        ])
-
-    def respond_from_unrecognized_faculty(self, message, tags):
-        for professor in self.PROFESSORS:
-            if professor in tags:
-                self.professor = professor
-                return self.go_to_state('specific_faculty')
-        return self.finish('fail')
-
-    # "unknown_drug" state functions
-
-    def on_enter_unknown_drug(self):
-        return
-
-    def respond_from_unknown_drug(self, message, tags):
-        return
+            if 'yes' in tags:
+                return "I'm happy to help! Please leave this instance of the teendrugbot and come back with your next problem!"
+            elif 'thanks' in tags:
+                return self.finish_thanks()
+            else:
+                return self.finish_success()
 
     # "common_symptom" state functions
 
     def on_enter_common_symptom(self):
-        return
+        return "Sorry, I'll need a bit more information to determine what kind of drug your teen is experimenting with. \n" \
+               "Does your teen have bloodshoot eyes often and do they seem to be losing motivation?"
 
     def respond_from_common_symptom(self, message, tags):
-        return
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            self.drug = "weed"
+            return self.go_to_state('identified_drug')
+        else:
+            return self.go_to_state('common_symptom_2')
+
+    def on_enter_common_symptom_2(self):
+        return "Is your teen being overly talkative and unusually excitable?"
+
+    def respond_from_common_symptom_2(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            self.drug = "addy"
+            return self.go_to_state('identified_drug')
+        else:
+            return self.go_to_state('common_symptom_3')
+
+    def on_enter_common_symptom_3(self):
+        return "Is your teen getting into fights and unable to do complex tasks?"
+
+    def respond_from_common_symptom_3(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            self.drug = "alcohol"
+            return self.go_to_state('identified_drug')
+        else:
+            return self.go_to_state('common_symptom_4')
+
+    def on_enter_common_symptom_4(self):
+        return "Have you noticed your teen coughing/wheezing a lot or if they have stained/yellow fingers?"
+
+    def respond_from_common_symptom_4(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            self.drug = "tobacco"
+            return self.go_to_state('identified_drug')
+        else:
+            return self.go_to_state('common_symptom_5')
+
+    def on_enter_common_symptom_5(self):
+        return "Has your teen been getting frequent nose bleeds or often have a runny nose?"
+
+    def respond_from_common_symptom_5(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            self.drug = "cocaine"
+            return self.go_to_state('identified_drug')
+        else:
+            return self.go_to_state('common_symptom_6')
+
+    def on_enter_common_symptom_6(self):
+        return "Has your teen been hallucinating and seeing things that aren't there?"
+
+    def respond_from_common_symptom_6(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            self.drug = "lsd"
+            return self.go_to_state('identified_drug')
+        else:
+            return self.go_to_state('common_symptom_7')
+
+    def on_enter_common_symptom_7(self):
+        return "Have you noticed any injection marks on your teen?"
+
+    def respond_from_common_symptom_7(self, message, tags):
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            self.drug = "opioid"
+            return self.go_to_state('identified_drug')
+        else:
+            return self.finish_fail()
 
     # "finish" functions
-
-    def finish_confused(self):
-        return "Sorry, I'm just a simple bot that understands a few things.\nYou can ask me for advice if you are struggling with computer science!"
-
-    def finish_location(self):
-        return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
 
     def finish_success(self):
         return 'Great, let me know if you need anything else!'
 
     def finish_fail(self):
-        return "I've tried my best but I still don't understand. Maybe try asking other students?"
+        return "I've tried my best but I still don't understand. Maybe try asking a human health professional?"
 
     def finish_thanks(self):
         return "You're welcome!"
