@@ -238,79 +238,64 @@ class teendrugbot(ChatBot):
         'shakiness':'addy',
         'tremors':'addy',
         'seizures':'addy',
+        'adderall':'addy',
 
         # alcohol
-        'bloodshot eyes':'alcohol',
+         'bloodshot eyes':'alcohol',
         'appetite': 'alcohol',
-        'sleep': 'alcohol',
         'shaking': 'alcohol',
         'grooming': 'alcohol',
         'hygeine': 'alcohol',
         'slurred speech': 'alcohol',
-        'bad coordination': 'alcohol',
         'bruises': 'alcohol',
         'smell of alcohol': 'alcohol',
+        'alcohol':'alcohol',
         'gum': 'alcohol',
-        'breath mints': 'alcohol',
-        'poor coordination': 'alcohol',
-        'missing school': 'alcohol',
-        'grades': 'alcohol',
-        'trouble': 'alcohol',
-        'fights': 'alcohol',
         'arguments': 'alcohol',
         'accidents': 'alcohol',
-        'interest': 'alcohol',
-        'money': 'alcohol',
         'isolated': 'alcohol',
-        'withdrawn': 'alcohol',
-        'mood': 'alcohol',
         'irritability': 'alcohol',
         'outburst': 'alcohol',
         'alcohol': 'alcohol',
+        'bottles':'alcohol',
+        'bottle':'alcohol',
 
         # tobacco
-        'breath': 'tobacco',
+         'breath': 'tobacco',
+        'bad breath':'tobacco',
         'teeth': 'tobacco',
         'yellow': 'tobacco',
-        'cough': 'tobacco',
         'fingers': 'tobacco',
         'wheezing': 'tobacco',
-        'smell': 'tobacco',
         'smoke': 'tobacco',
+        'smokey':'tobacco',
         'windows': 'tobacco',
         'burn': 'tobacco',
         'burns': 'tobacco',
+        'fire':'tobacco',
         'lighter': 'tobacco',
         'matches': 'tobacco',
         'temper': 'tobacco',
         'tobacco': 'tobacco',
 
+
         # cocaine
-        'hyper': 'cocaine',
+         'hyper': 'cocaine',
         'pupils': 'cocaine',
         'nose': 'cocaine',
-        'weight': 'cocaine',
-        'mood': 'cocaine',
+        'snort':'cocaine',
         'behavior': 'cocaine',
         'confidence': 'cocaine',
         'talkative': 'cocaine',
-        'sleep': 'cocaine',
-        'sleeping': 'cocaine',
-        'eating': 'cocaine',
-        'eat': 'cocaine',
         'powder': 'cocaine',
         'hygeiene': 'cocaine',
-        'money': 'cocaine',
-        'interest': 'cocaine',
         'needle marks': 'cocaine',
         'spoon': 'cocaine',
         'razor': 'cocaine',
-        'baggies': 'cocaine',
         'isolation': 'cocaine',
 
         # LSD, etc.
-        'pupils': 'lsd',
-        'dry mouth': 'lsd',
+         'dry mouth': 'lsd',
         'tingling fingers': 'lsd',
         'weakness': 'lsd',
         'distress': 'lsd',
@@ -320,44 +305,32 @@ class teendrugbot(ChatBot):
         'depressed': 'lsd',
         'disoriented': 'lsd',
         'paranoid': 'lsd',
-        'dizzy': 'lsd',
-        'nauseous': 'lsd',
-        'heartrate': 'lsd',
-        'heart rate': 'lsd',
         'convulsions': 'lsd',
         'sweating': 'lsd',
         'chills': 'lsd',
         'vision': 'lsd',
+        'hallucinate':'lsd',
+        'hallucinogen':'lsd',
+        'seeing things':'lsd',
 
         # opioides
-        'breath': 'opioid',
-        'dry mouth': 'opioid',
-        'pupils': 'opioid',
-        'behavior': 'opioid',
         'disoriented': 'opioid',
         'swings': 'opioid',
         'droopy': 'opioid',
         'needles': 'opioid',
         'syringe': 'opioid',
         'spoon': 'opioid',
-        'burn': 'opioid',
         'shoelaces': 'opioid',
         'straws': 'opioid',
-        'baggies': 'opioid',
-        'plastic bags': 'opioid',
         'pipe': 'opioid',
-        'weight': 'opioid',
         'nose': 'opioid',
         'marks': 'opioid',
         'infection': 'opioid',
         'cuts': 'opioid',
         'scabs': 'opioid',
         'picking': 'opioid',
-        'sleep': 'opioid',
         'hygiene': 'opioid',
         'motivation': 'opioid',
-        'withdrawn':'opioid',
-        'money': 'opioid',
         'hostile': 'opioid',
         'self esteem': 'opioid',
         'pants': 'opioid',
@@ -374,6 +347,7 @@ class teendrugbot(ChatBot):
         'rapid heartbeat':'common',
         'dry mouth':'common', #shared in four categories
         'poor coordination': 'common', #shared between alcohol and weed
+        'bad coordination':'common',
         'loss of motivation': 'common', #shared between weed and narcotics
         'no motivation': 'common',
         'lack of motivation': 'common',
@@ -382,7 +356,7 @@ class teendrugbot(ChatBot):
         'lack of enthusiasm':'common',
         'paranoia':'common', #shared between weed and hallucinogens
         'paranoid':'common',
-        'small baggies':'common', #cocaine, weed, narcotics, and adderall
+        'bag':'common', #cocaine, weed, narcotics, and adderall
         'pipe':'common', #narcostics, tabacco, weed
         'pipes':'common',
         'baggies':'common', #shared between weed, adderall, cocaine, and narcotics
@@ -402,14 +376,28 @@ class teendrugbot(ChatBot):
         'poor personal grooming':'common',
         'stinky':'common',
         'smelly':'common',
+        'smell':'common',
         'slurred speech':'common', #shared between alcohol and addy
         'slurred':'common',
         'incoherent speech':'common',
-
-
-
-
-
+        'missing school': 'common',
+        'grades': 'common',
+        'trouble': 'common',
+        'fights': 'common',
+        'interest': 'common',
+        'sleep': 'common',
+        'money': 'money',
+        'mood': 'common',
+        'weight':'common',
+        'eat': 'common,',
+        'eating': 'common',
+        'dizzy': 'common',
+        'nauseous': 'common',
+        'heartrate': 'common',
+        'heart rate': 'common',
+        'pupils': 'common',
+        'behavior': 'common',
+        'withdrawn': 'common',
     }
 
     COURSES = [
@@ -440,7 +428,6 @@ class teendrugbot(ChatBot):
         """
         super().__init__(default_state='waiting')
         self.professor = None
-        self.course = None               # to store a specific course name
 
     def get_office_hours(self, professor):
         """Find the office hours of a professor.
@@ -498,14 +485,14 @@ class teendrugbot(ChatBot):
 
     def respond_from_waiting(self, message, tags):
         self.professor = None
-        if 'failing' in tags:
-            return self.go_to_state('failing')
-
-        if ('intro' in tags) or ('mathematica' in tags) or ('data structures' in tags) or ('computer organization' in tags) or ('algorithms analysis' in tags) or ('hci' in tags):
-            return self.go_to_state('specific_class')
-
-        if ('mobile apps' in tags) or ('information theory' in tags) or ('practicum' in tags) or ('junior seminar' in tags):
-            return self.go_to_state('spring2018')
+        if ('alcohol' in tags) or ('cocaine' in tags) or ('weed' in tags) or ('lsd' in tags) or ('tobacco' in tags) or ('addy' in tags):
+            return self.go_to_state('identified_drug')
+        elif 'common' in tags:
+            return self.go_to_state('common_symptom')
+        elif 'thanks' in tags:
+            return self.finish('thanks')
+        else:
+            return self.go_to_state('unknown_drug')
 
         if 'office-hours' in tags:
             for professor in self.PROFESSORS:
@@ -534,17 +521,6 @@ class teendrugbot(ChatBot):
         else:
             return self.finish('location')
 
-    # "failing" state functions
-    def on_enter_failing(self):
-        return 'Which course are you currently failing?'
-
-    def on_enter_specific_class(self):
-        return 'You should get in touch with your professor. Do you know when their office hours are?'
-
-    def on_enter_spring2018(self):
-        return ("I'm sorry, I can only help you with courses offered this semester.\n" +
-                "Is there anything else I can help you with?")
-
     # "unknown_faculty" state functions
 
     def on_enter_unknown_faculty(self):
@@ -571,6 +547,14 @@ class teendrugbot(ChatBot):
                 self.professor = professor
                 return self.go_to_state('specific_faculty')
         return self.finish('fail')
+
+    # "identified_drug" state functions
+
+    def on_enter_identified_drug(self):
+        return
+
+    def respond_from_identified_drug(self, message, tags):
+        return
 
     # "unknown_drug" state functions
 
