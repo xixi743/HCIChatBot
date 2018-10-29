@@ -173,7 +173,6 @@ class teendrugbot(ChatBot):
 
     STATES = [
         'waiting',
-        'unknown_drug',
         'common_symptom',
         'common_symptom_2',
         'common_symptom_3',
@@ -319,6 +318,7 @@ class teendrugbot(ChatBot):
         'vision': 'lsd',
         'hallucinate':'lsd',
         'hallucinogen':'lsd',
+        'hallucinating':'lsd',
         'seeing things':'lsd',
 
         # opioides
@@ -368,7 +368,7 @@ class teendrugbot(ChatBot):
         'pipe':'common', #narcostics, tabacco, weed
         'pipes':'common',
         'baggies':'common', #shared between weed, adderall, cocaine, and narcotics
-        'bag':'common',
+        'small baggies':'common',
         'insence':'common', #used to mask smoking
         'air freshener':'common',
         'cologne':'common',
@@ -411,7 +411,11 @@ class teendrugbot(ChatBot):
         'yes':'yes',
         'yeah':'yes',
         'no':'no',
-        'nope':'no'
+        'nope':'no',
+
+        'thanks':'thanks',
+        'thanks!':'thanks',
+        'thank you':'thanks'
     }
 
 
@@ -447,7 +451,7 @@ class teendrugbot(ChatBot):
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
-            return self.go_to_state('unknown_drug')
+            return self.go_to_state('common_symptom')
 
     # "identified_drug" state functions
 
@@ -476,29 +480,53 @@ class teendrugbot(ChatBot):
                    "using Adderall without a prescription. \nBe open, be understanding, be kind.\n\nAny other problems with your" \
                    " kid(s) and drugs?"
         elif self.drug == 'lsd':
-            return "*FIXME*"
+            return "Sounds like your kid is using hallucinogens. You’re in luck! Or as lucky as you can be with your child using drugs. The FDA has claimed that " \
+                   "\nLSD and most other hallucinogens do not make the chemical changes in the brain responsible" \
+                   " \nfor the development of cravings like other drugs do, meaning that there is no element of chemically" \
+                   " \ndependent drug seeking behavior. Although there is no chemical addiction, your kid could still have " \
+                   "\na general addiction to the effects of hallucinogens. If your kid is addicted, they’d be taking " \
+                   "\nhallucinogens with other substances to heighten the experience of hallucinogens, spending " \
+                   "\nsubstantial amounts of time or money on obtaining or using hallucinogens, and neglecting " \
+                   "\nresponsibilities or hobbies as a result of continued hallucinogen use. " \
+                   "\n\nIs your child doing any of those things?"
         return self.finish_fail()
 
     def respond_from_identified_drug(self, message, tags):
         if self.drug == 'weed':
             if 'yes' in tags:
-                return 'Everyone smokes it now. Warn your kid of the repercussions and move on.'
+                return 'Everyone smokes it now. Warn your kid of the repercussions and move on.\n\nFor more help and advice, leave this instance of the ' \
+                       'teendrugbot and come back!'
             else:
-                return "As far as drugs go, that ain't bad! Confiscate it for yourself."
+                return "As far as drugs go, that ain't bad! Confiscate it for yourself.\n\nFor more help and advice, leave this instance of the " \
+                       "teendrugbot and come back!"
+        elif self.drug == 'lsd':
+            if 'yes' in tags:
+                return "Gosh diddly darn. That’s pretty serious! Hallucinogens require larger amounts over time to " \
+                       "\nexperience the desired effects, which means it’s really easy to overdose with consistent use, " \
+                       "\nand bad trips that put your kid in danger are more frequent. Talking to your kid about how " \
+                       "\ndangerous hallucinogens can be is the best first step. Then from there, you can either use a " \
+                       "\nbrief intervention technique, or community reinforcement and family training (CRAFT), both of " \
+                       "\nwhich are backed by a bunch of research. Brief interventions are essentially short counseling " \
+                       "\nsessions—lasting anywhere from 5-30 minutes—that are administered by trained healthcare " \
+                       "\nproviders. CRAFT, on the other hand, is a way to increase compliance of your kid in substance " \
+                       "\nabuse treatment by properly engaging family and community members. People who comprise " \
+                       "\nyour kid’s support system are trained in ways that strengthen this system and maximize the " \
+                       "\nindividual’s chances of maintaining sobriety.\n\nFor more help and advice, leave this instance of the " \
+                       "teendrugbot and come back!"
+            else:
+                return "Alrighty then! Helping your kid is pretty straightforward. " \
+                       "\nIt’s really about talking to your kid in an open way where you’re really trying to hear " \
+                       "\nthem. Then, once you’ve addressed the issue yourself, providing group and individual therapy " \
+                       "\nare effective ways to address the reasons behind the substance use and helping your to develop" \
+                       " \nboth better coping skills and techniques to prevent relapse.\n\nFor more help and advice, leave this instance of the " \
+                       "teendrugbot and come back!"
         else:
             if 'yes' in tags:
                 return "I'm happy to help! Please leave this instance of the teendrugbot and come back with your next problem!"
+            elif 'thanks' in tags:
+                return self.finish_thanks()
             else:
                 return self.finish_success()
-        return
-
-    # "unknown_drug" state functions
-
-    def on_enter_unknown_drug(self):
-        return
-
-    def respond_from_unknown_drug(self, message, tags):
-        return
 
     # "common_symptom" state functions
 
@@ -517,11 +545,11 @@ class teendrugbot(ChatBot):
         return "Is your teen being overly talkative and unusually excitable?"
 
     def respond_from_common_symptom_2(self, message, tags):
-            if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
-                self.drug = "addy"
-                return self.go_to_state('identified_drug')
-            else:
-                return self.go_to_state('common_symptom_3')
+        if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
+            self.drug = "addy"
+            return self.go_to_state('identified_drug')
+        else:
+            return self.go_to_state('common_symptom_3')
 
     def on_enter_common_symptom_3(self):
         return "Is your teen getting into fights and unable to do complex tasks?"
@@ -571,16 +599,9 @@ class teendrugbot(ChatBot):
             self.drug = "opioid"
             return self.go_to_state('identified_drug')
         else:
-            print("I'm sorry, I couldn't determine what drug your teen might be using.")
             return self.finish_fail()
 
     # "finish" functions
-
-    def finish_confused(self):
-        return "Sorry, I'm just a simple bot that understands a few things.\nYou can ask me for advice if you are struggling with computer science!"
-
-    def finish_location(self):
-        return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
 
     def finish_success(self):
         return 'Great, let me know if you need anything else!'
