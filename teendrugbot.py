@@ -180,7 +180,8 @@ class teendrugbot(ChatBot):
         'common_symptom_5',
         'common_symptom_6',
         'common_symptom_7',
-        'identified_drug'
+        'identified_drug',
+        'greeting'
     ]
 
     TAGS = {
@@ -415,7 +416,11 @@ class teendrugbot(ChatBot):
 
         'thanks':'thanks',
         'thanks!':'thanks',
-        'thank you':'thanks'
+        'thank you':'thanks',
+
+        'hi':'hi',
+        'hello':'hi',
+        'yo':'hi'
     }
 
 
@@ -446,8 +451,35 @@ class teendrugbot(ChatBot):
             if 'addy' in tags:
                 self.drug = 'addy'
             return self.go_to_state('identified_drug')
-        elif 'common' in tags:
+        elif 'hi' in tags:
+            return self.go_to_state('greeting')
+        elif 'thanks' in tags:
+            return self.finish('thanks')
+        else:
             return self.go_to_state('common_symptom')
+
+    # "greeting" state functions
+
+    def on_enter_greeting(self):
+        return 'So, you think your teen is doing drugs? What symptoms are they exhibiting? Any changes in behavior? \n'
+
+    def respond_from_geeting(self, message, tags):
+        if ('alcohol' in tags) or ('cocaine' in tags) or ('weed' in tags) or ('lsd' in tags) or ('tobacco' in tags) or ('addy' in tags):
+            if 'alcohol' in tags:
+                self.drug = 'alcohol'
+            if 'cocaine' in tags:
+                self.drug = 'cocaine'
+            if 'weed' in tags:
+                self.drug = 'weed'
+            if 'lsd' in tags:
+                self.drug = 'lsd'
+            if 'tobacco' in tags:
+                self.drug = 'tobacco'
+            if 'addy' in tags:
+                self.drug = 'addy'
+            return self.go_to_state('identified_drug')
+        elif 'hi' in tags:
+            return self.go_to_state('greeting')
         elif 'thanks' in tags:
             return self.finish('thanks')
         else:
