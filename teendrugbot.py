@@ -494,14 +494,14 @@ class teendrugbot(ChatBot):
     def respond_from_identified_drug(self, message, tags):
         if self.drug == 'weed':
             if 'yes' in tags:
-                print('Everyone smokes it now. Warn your kid of the repercussions and move on.\n\n')
-                return self.finish_success()
+                return 'Everyone smokes it now. Warn your kid of the repercussions and move on.\n\nFor more help and advice, leave this instance of the ' \
+                       'teendrugbot and come back!'
             else:
-                print("As far as drugs go, that ain't bad! Confiscate it for yourself.\n\n")
-                return self.finish_success()
+                return "As far as drugs go, that ain't bad! Confiscate it for yourself.\n\nFor more help and advice, leave this instance of the " \
+                       "teendrugbot and come back!"
         elif self.drug == 'lsd':
             if 'yes' in tags:
-                print("Gosh diddly darn. That’s pretty serious! Hallucinogens require larger amounts over time to " \
+                return "Gosh diddly darn. That’s pretty serious! Hallucinogens require larger amounts over time to " \
                        "\nexperience the desired effects, which means it’s really easy to overdose with consistent use, " \
                        "\nand bad trips that put your kid in danger are more frequent. Talking to your kid about how " \
                        "\ndangerous hallucinogens can be is the best first step. Then from there, you can either use a " \
@@ -511,19 +511,18 @@ class teendrugbot(ChatBot):
                        "\nproviders. CRAFT, on the other hand, is a way to increase compliance of your kid in substance " \
                        "\nabuse treatment by properly engaging family and community members. People who comprise " \
                        "\nyour kid’s support system are trained in ways that strengthen this system and maximize the " \
-                       "\nindividual’s chances of maintaining sobriety.\n\n")
-                return self.finish_success()
+                       "\nindividual’s chances of maintaining sobriety.\n\nFor more help and advice, leave this instance of the " \
+                       "teendrugbot and come back!"
             else:
-                print("Alrighty then! Helping your kid is pretty straightforward. " \
+                return "Alrighty then! Helping your kid is pretty straightforward. " \
                        "\nIt’s really about talking to your kid in an open way where you’re really trying to hear " \
                        "\nthem. Then, once you’ve addressed the issue yourself, providing group and individual therapy " \
                        "\nare effective ways to address the reasons behind the substance use and helping your to develop" \
-                       " \nboth better coping skills and techniques to prevent relapse.\n\n")
-                return self.finish_success()
+                       " \nboth better coping skills and techniques to prevent relapse.\n\nFor more help and advice, leave this instance of the " \
+                       "teendrugbot and come back!"
         else:
             if 'yes' in tags:
-                print("I'm happy to help!")
-                return self.finish_success()
+                return "I'm happy to help! Please leave this instance of the teendrugbot and come back with your next problem!"
             elif 'thanks' in tags:
                 return self.finish_thanks()
             else:
