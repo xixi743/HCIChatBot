@@ -463,7 +463,7 @@ class teendrugbot(ChatBot):
     def on_enter_greeting(self):
         return 'So, you think your teen is doing drugs? What symptoms are they exhibiting? Any changes in behavior? \n'
 
-    def respond_from_geeting(self, message, tags):
+    def respond_from_greeting(self, message, tags):
         if ('alcohol' in tags) or ('cocaine' in tags) or ('weed' in tags) or ('lsd' in tags) or ('tobacco' in tags) or ('addy' in tags):
             if 'alcohol' in tags:
                 self.drug = 'alcohol'
