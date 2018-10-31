@@ -409,6 +409,7 @@ class teendrugbot(ChatBot):
         'heart rate': 'common',
         'pupils': 'common',
         'behavior': 'common',
+        'suspicious':'common',
         'withdrawn': 'common',
 
         # 'yes' and 'no' tags
