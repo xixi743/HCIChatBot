@@ -225,6 +225,7 @@ class teendrugbot(ChatBot):
         'grinder':'weed',
         'oregano':'weed',
         'marijuana leaves':'weed',
+        'marijuana':'weed',
         'devil':'weed',
         'devils lettuce':'weed',
         'grass':'weed',
@@ -291,6 +292,7 @@ class teendrugbot(ChatBot):
         'pupils': 'cocaine',
         'nose': 'cocaine',
         'snort':'cocaine',
+        'snorting':'cocaine',
         'behavior': 'cocaine',
         'confidence': 'cocaine',
         'talkative': 'cocaine',
@@ -532,7 +534,7 @@ class teendrugbot(ChatBot):
 
     def on_enter_common_symptom(self):
         return "Sorry, I'll need a bit more information to determine what kind of drug your teen is experimenting with. \n" \
-               "Does your teen have bloodshoot eyes often and do they seem to be losing motivation?"
+               "Does your teen have bloodshot eyes often and do they seem to be losing motivation?"
 
     def respond_from_common_symptom(self, message, tags):
         if ("yes" in tags) or ('yep' in tags) or ("ye" in tags):
