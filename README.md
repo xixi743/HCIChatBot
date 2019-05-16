@@ -3,7 +3,7 @@ This chat bot was created for my Human Computer Interaction course. We were task
 
 This idea came from one of my random thoughts in conversation with my professor and one of my groupmates. We were considering doing a parent chat bot that gave bad advice, but my professor expressed that doing so would be too easy due to the incincerity of the robot. I randomly suggested “What if a parent found drugs under their teen’s bed and our chat bot helped out with that?” Our professor liked the idea! :stuck_out_tongue:
 
-:heavy_exclamation_mark: **This is chatbot is not a medical tool nor does it provide an accurate diagnosis. We are not medical professionals. Please seek professional advice where needed** :heavy_exclamation_mark: 
+:heavy_exclamation_mark: **This is chatbot is not a medical tool nor does it provide an accurate diagnosis. We are not medical professionals. Please seek professional advice when needed** :heavy_exclamation_mark: 
 
 ## How it Works
 Once we had our idea, we got down to planning how we would carry it out. We started by creating a flow chart of the actions and dialogue that would occur when chatting with our bot. Then, we started figuring out how we would identify each drug in our chat bot. We decided to implement this by using dictionaries of tags. Our tags consisted of symptoms of drug use, changes in behaviors, drug paraphernalia, and nicknames for different drugs. 
